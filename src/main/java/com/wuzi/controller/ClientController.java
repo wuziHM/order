@@ -1,5 +1,6 @@
 package com.wuzi.controller;
 
+import com.wuzi.client.ProductClient;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ClientController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private ProductClient productClient;
+
     @GetMapping("/getProductMsg")
     public String getProductMsg() {
 
@@ -32,6 +36,18 @@ public class ClientController {
         String response = restTemplate.getForObject("http://PRODUCT/seller/order/msg", String.class);
 
 
+        log.info("response={}", response);
+
+        return response;
+    }
+
+    @GetMapping("/getProductMsg1")
+    public String getProductMsg1() {
+
+//        第三种方式（利用@LoadBalanced，可在restTemplate里使用应用名字）
+//        String response = restTemplate.getForObject("http://PRODUCT/seller/order/msg", String.class);
+
+        String response = productClient.productMsg();
         log.info("response={}", response);
 
         return response;

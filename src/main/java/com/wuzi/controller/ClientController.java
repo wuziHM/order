@@ -1,13 +1,19 @@
 package com.wuzi.controller;
 
 import com.wuzi.client.ProductClient;
+import com.wuzi.dataobject.ProductInfo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @program: order
@@ -51,5 +57,17 @@ public class ClientController {
         log.info("response={}", response);
 
         return response;
+    }
+
+//    @PostMapping("/getProductList")
+//    public List<ProductInfo> getProductList(@RequestParam(value = "productIds") List<String> ids) {
+//        List<ProductInfo> productInfoList = productClient.productInfo(ids);
+//        return productInfoList;
+//    }
+
+    @GetMapping("/getProductList")
+    public List<ProductInfo> getProductList() {
+        List<ProductInfo> productInfoList = productClient.productInfo(Arrays.asList("123456","123457"));
+        return productInfoList;
     }
 }

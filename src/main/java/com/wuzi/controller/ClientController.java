@@ -2,6 +2,7 @@ package com.wuzi.controller;
 
 import com.wuzi.client.ProductClient;
 import com.wuzi.dataobject.ProductInfo;
+import com.wuzi.dto.CartDTO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,13 @@ public class ClientController {
 
     @GetMapping("/getProductList")
     public List<ProductInfo> getProductList() {
-        List<ProductInfo> productInfoList = productClient.productInfo(Arrays.asList("123456","123457"));
+        List<ProductInfo> productInfoList = productClient.productInfo(Arrays.asList("123456", "123457"));
         return productInfoList;
+    }
+
+    @GetMapping("/productDecreaseStock")
+    public String productDecreaseStock() {
+        productClient.decreaseStock(Arrays.asList(new CartDTO("123456", 5)));
+        return "修改成功";
     }
 }

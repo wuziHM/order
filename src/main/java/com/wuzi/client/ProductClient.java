@@ -1,7 +1,7 @@
 package com.wuzi.client;
 
 import com.wuzi.dataobject.ProductInfo;
-import org.hibernate.annotations.Parameter;
+import com.wuzi.dto.CartDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +14,8 @@ import java.util.List;
  * @program: order
  * @author: HM
  * @create: 2019-03-20 11:47
- * @description:
- *
- * Feign也是用了ribbon做负载均衡
- *
+ * @description: Feign也是用了ribbon做负载均衡
+ * <p>
  * 可以达到像调用本地方法的体验，但是实际中还是用的http请求
  **/
 @FeignClient(name = "product")
@@ -32,4 +30,6 @@ public interface ProductClient {
     @PostMapping("/buyer/product/listForOrder")
     List<ProductInfo> productInfo(@RequestBody List<String> productId);
 
+    @PostMapping("/buyer/product/decreaseStock")
+    void decreaseStock(@RequestBody List<CartDTO> cartDTOList);
 }
